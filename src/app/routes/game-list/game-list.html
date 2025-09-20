@@ -1,0 +1,35 @@
+@if(!loaded()) {
+<h2>Loading...</h2>
+}
+
+@else if(failed()) {
+<h2>Error</h2>
+}
+
+@else {
+
+<h1>Steam Game Tracker</h1>
+
+<br>
+
+<form>
+    <label for="searchTerm">Search: </label>
+    <input name="searchTerm" [(ngModel)]="searchTerm">
+    <br>
+    <label for="filterNotPlayed">Only not played: </label>
+    <input type="checkbox" name="filterNotPlayed" [(ngModel)]="filterNotPlayed">
+</form>
+
+<br>
+
+<div class="game-list">
+    @for(game of games() | filterGamesByName : searchTerm() | filterGamesByPlayed : false : filterNotPlayed(); track game.appid) {
+        <app-game-list-item 
+            [game]="game" 
+            [played]="progressTracker.getPlayed(game.appid)"
+            (playedChanged)="onPlayedChanged(game.appid, $event)"    
+        />
+    }
+</div>
+
+}
