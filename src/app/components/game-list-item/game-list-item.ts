@@ -8,8 +8,9 @@ import { SteamUserGame } from '../../model/steam-user-game.interface';
   styleUrl: './game-list-item.css'
 })
 export class GameListItem {
-  colorTop = signal('rgba(179, 233, 255, 0.5)');
-  colorBottom = signal('rgba(47, 94, 109, 1)');
+  colorTop = signal('rgba(131, 209, 255, 0.3)');
+  colorMid = signal('rgba(11, 106, 138, 0.8)');
+  colorBottom = signal('rgba(4, 56, 99, 1)');
 
   game = input.required<SteamUserGame>();
   played = input<boolean>(false);

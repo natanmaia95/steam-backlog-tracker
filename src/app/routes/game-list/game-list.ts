@@ -6,10 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { FilterGamesByNamePipe } from '../../pipes/filter-games-by-name-pipe';
 import { ProgressTracker } from '../../services/progress-tracker';
 import { FilterGamesByPlayedPipe } from "../../pipes/filter-games-by-played-pipe";
+import { NgClass } from '@angular/common';
+import { RandomGamesPanel } from '../../components/random-games-panel/random-games-panel';
+
 
 @Component({
   selector: 'app-game-list',
-  imports: [GameListItem, FormsModule, FilterGamesByNamePipe, FilterGamesByPlayedPipe],
+  imports: [GameListItem, FormsModule, FilterGamesByNamePipe, FilterGamesByPlayedPipe, NgClass, RandomGamesPanel],
   templateUrl: './game-list.html',
   styleUrl: './game-list.css'
 })
@@ -22,10 +25,13 @@ export class GameList {
   loaded = signal(false);
   failed = signal(false);
 
+  randomGamesVisible = signal(false);
+  randomGames = signal<Array<SteamUserGame>>([]);
+
   searchTerm = signal('');
   filterNotPlayed = signal(false);
 
-
+  nameFilter = signal('Only Not Played');
 
   ngOnInit() {
     this.loadGames();
@@ -46,6 +52,22 @@ export class GameList {
 
   onPlayedChanged(appId:number, checked:boolean) {
     this.progressTracker.setPlayed(appId, checked);
-    console.log(appId, checked);
+  }
+
+  showRandomGames() {
+    var unplayedGames = this.games().filter((game) => {
+      return this.progressTracker.getPlayed(game.appid) == false;
+    })
+
+    this.randomGames.set(unplayedGames
+      .sort((_a, _b) => 0.5 - Math.random())
+      .slice(0,3)
+    );
+
+    this.randomGamesVisible.set(true);
+  }
+
+  hideRandomGames() {
+    this.randomGamesVisible.set(false);
   }
 }

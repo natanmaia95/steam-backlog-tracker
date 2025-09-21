@@ -8,19 +8,35 @@
 
 @else {
 
-<h1>Steam Game Tracker</h1>
+<app-random-games-panel 
+    [visible]="randomGamesVisible()"
+    [games]="randomGames()"
+    (closePressed)="hideRandomGames()"
+/>
 
-<br>
+<header>
+    <div class="title-container">
+        <h1>Steam Game Tracker</h1>
+    </div>
+    <div class="search-container">
+        <input class="search-bar" [(ngModel)]="searchTerm" placeholder="Search games...">
+        <!-- <input type="button" [(ngModel)]="filterNotPlayed" [value]="'nameFilter()'"> -->
+        <button class="btn-search-option" [ngClass]="{'toggled': filterNotPlayed()}" (click)="filterNotPlayed.set(!filterNotPlayed())">🔻Unplayed</button>
+        <button class="btn-search-option" (click)="showRandomGames()">🎲Random 3</button>
+        <button class="btn-search-option" (click)="progressTracker.clearProgress()">🗑️Clear Data</button>
+        
+        <!-- <form>
+            <input name="searchTerm" [(ngModel)]="searchTerm" placeholder="Search games...">
+            <br>
+            <label for="filterNotPlayed">Only not played: </label>
+            <input type="button" name="filterNotPlayed" [(ngModel)]="filterNotPlayed" value="nameFilter()">
+        </form>
+        <button (click)="progressTracker.clearProgress()">Clear Data</button> -->
+    </div>
+</header>
 
-<form>
-    <label for="searchTerm">Search: </label>
-    <input name="searchTerm" [(ngModel)]="searchTerm">
-    <br>
-    <label for="filterNotPlayed">Only not played: </label>
-    <input type="checkbox" name="filterNotPlayed" [(ngModel)]="filterNotPlayed">
-</form>
 
-<br>
+<div style="height: 200px"></div>
 
 <div class="game-list">
     @for(game of games() | filterGamesByName : searchTerm() | filterGamesByPlayed : false : filterNotPlayed(); track game.appid) {

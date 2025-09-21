@@ -31,6 +31,8 @@ p {
     padding: 0px 16px;
     margin: 0px;
     user-select: none;
+
+    text-align: center;
 }
 
 .icon {

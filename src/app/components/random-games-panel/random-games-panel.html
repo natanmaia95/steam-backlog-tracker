@@ -1,0 +1,19 @@
+@if (visible()) {
+
+<div class="modal-backdrop">
+    <div class="random-games-panel">
+        <h2>Play These Next!</h2>
+        <div class="random-game-list">
+        @for(game of games(); track game.appid) {
+            <app-game-list-item 
+                [game]="game" 
+                [played]="progressTracker.getPlayed(game.appid)"
+                (playedChanged)="progressTracker.setPlayed(game.appid, $event)"       
+            />
+        }
+        </div>
+        <button (click)="onClosePressed()">Close</button>
+    </div>
+</div>
+
+}

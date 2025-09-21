@@ -2,10 +2,11 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SteamApi } from './services/steam-api';
 import { GameList } from "./routes/game-list/game-list";
+import { Footer } from "./components/footer/footer";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, GameList],
+  imports: [RouterOutlet, GameList, Footer],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
