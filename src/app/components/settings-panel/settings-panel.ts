@@ -12,11 +12,15 @@ export class SettingsPanel {
 
   appSettings = inject(AppSettings);
 
+  apiKey = signal('');
+  accountId = signal('');
+
   visible = input(false);
-  closePressed = output();
+  closePressed = output<boolean>();
 
   ngOnInit() {
     //this.apiKey.set()
+    this.recoverSettings();
   }
 
   onClearPressed() {
@@ -26,7 +30,23 @@ export class SettingsPanel {
   }
 
   onClosePressed() {
+    this.recoverSettings();
+    this.closePressed.emit(false);
+  }
+
+  onApplyPressed() {
+    this.applySettings();
     this.appSettings.saveSettings();
-    this.closePressed.emit();
+    this.closePressed.emit(true);
+  }
+
+  recoverSettings() {
+    this.apiKey.set(this.appSettings.apiKey());
+    this.accountId.set(this.appSettings.accountId());
+  }
+
+  applySettings() {
+    this.appSettings.apiKey.set(this.apiKey());
+    this.appSettings.accountId.set(this.accountId());
   }
 }

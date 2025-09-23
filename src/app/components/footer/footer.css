@@ -4,4 +4,85 @@ footer {
     right: 6%;
 
     z-index: 999999;
+
+    background-color: #000A;
+    backdrop-filter: blur(4px);
+    border-radius: 8px;
+
+    scale: 1;
+    transition: scale 0.3s;
+    animation: return-to-zero 0.5s ease-in-out paused;
+}
+
+footer:hover {
+    scale: 1.2;
+    animation-play-state: running;
+    animation: smooth-wave 3s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0% {
+    transform: rotate(0);
+    opacity: 1;
+  }
+  25% {
+    transform: rotate(5deg);
+    opacity: 1;
+  }
+  50% {
+    transform: rotate(0);
+    opacity: 1;
+  }
+  75% {
+    transform: rotate(-5deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(0);
+    opacity: 1;
+  }
+}
+
+@keyframes smooth-wave {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(8deg);
+  }
+  40% {
+    transform: rotate(-8deg);
+  }
+  60% {
+    transform: rotate(8deg);
+  }
+  80% {
+    transform: rotate(-8deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes return-to-zero {
+  from { transform: rotate(var(--current-rotation, 0deg)); }
+  to { transform: rotate(0deg); }
+}
+
+.rainbow-text {
+  background-image: repeating-linear-gradient(to left, magenta, indigo, blue, green, yellow, orange, red, magenta, indigo, blue, green, yellow, orange, red);
+  background-clip: text;
+  color: #FFFA;
+
+  background-size: 220% auto;
+  animation: rainbow-scroll 3s linear infinite;
+}
+
+@keyframes rainbow-scroll {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }

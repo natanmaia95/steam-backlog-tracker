@@ -7,10 +7,24 @@
     <label>
         <img class="icon" src={{game().img_icon_url}} alt={{game().name}} />
         <p>{{game().name}}</p>
+
         <input 
+                
             type="checkbox" 
             [checked]="played()"
             (change)="onCheckboxChanged($event.target.checked)"
         />
+
+        <!-- Copilot icon thingy -->
+        <span class="checkbox-svg">
+            @if (played()) {
+                <!-- Checked SVG -->
+                <img src="check-svgrepo-com.svg" width="32">
+            } @else {
+                <!-- Unchecked SVG -->
+                 <img src="loading-svgrepo-com.svg" width="32">   
+            }
+        </span>
+
     </label>
 </div>

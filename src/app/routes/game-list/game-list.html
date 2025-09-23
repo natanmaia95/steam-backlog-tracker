@@ -1,15 +1,15 @@
 <app-settings-panel
     [visible]="settingsVisible()"
-    (closePressed)="hideSettings()"
+    (closePressed)="hideSettings($event)"
 />
 
 @if(failed()) {
 <header>
     <div class="title-container">
-        <h1>Steam Game Tracker</h1>
+        <h1>Steam Backlog Tracker</h1>
 
-        <button>
-            <img class="img-icon-settings" (click)="showSettings()" src="settings-2-svgrepo-com.svg">
+        <button (click)="showSettings()">
+            <img class="img-icon-settings" src="settings-2-svgrepo-com.svg">
         </button>
     </div>
 </header>
@@ -20,10 +20,10 @@
 @else if(!loaded()) {
 <header>
     <div class="title-container">
-        <h1>Steam Game Tracker</h1>
+        <h1>Steam Backlog Tracker</h1>
 
-        <button>
-            <img class="img-icon-settings" (click)="showSettings()" src="settings-2-svgrepo-com.svg">
+        <button (click)="showSettings()" >
+            <img class="img-icon-settings" src="settings-2-svgrepo-com.svg">
         </button>
     </div>
 </header>
@@ -41,10 +41,10 @@
 
 <header>
     <div class="title-container">
-        <h1>Steam Game Tracker</h1>
+        <h1>Steam Backlog Tracker</h1>
 
-        <button>
-            <img class="img-icon-settings" (click)="showSettings()" src="settings-2-svgrepo-com.svg">
+        <button (click)="showSettings()" >
+            <img class="img-icon-settings" src="settings-2-svgrepo-com.svg">
         </button>
     </div>
     <div class="search-container">

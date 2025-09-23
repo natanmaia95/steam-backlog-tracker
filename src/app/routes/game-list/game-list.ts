@@ -90,9 +90,11 @@ export class GameList {
     this.settingsVisible.set(true);
   }
 
-  hideSettings() {
+  hideSettings(didApply:boolean) {
     this.settingsVisible.set(false);
-    this.loadGames();
-    console.log('reloading');
+    if (didApply) {
+      this.loadGames();
+      console.log('reloading');
+    }
   }
 }

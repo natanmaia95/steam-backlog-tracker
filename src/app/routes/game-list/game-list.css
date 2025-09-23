@@ -55,14 +55,22 @@ header {
     /* height: 40px; */
 
     font-size: 20px;
-    padding: 4px;
+    padding: 6px;
+    padding-left: 12px;
+    background-color: #0005;
+
+    color: white;
+}
+
+.search-bar:focus {
+    background-color: #0002;
 }
 
 
 .btn-search-option {
     width: 120px;
     height: 40px;
-    background-color: white;
+    background-color: #0005;
     margin-left: 8px;
 
     font-size: 16px;
@@ -70,7 +78,8 @@ header {
 }
 
 .btn-search-option.toggled {
-    background-color: aqua;
+    background-color: #FFF3;
+    scale: 1.02;
 }
 
 .game-list {

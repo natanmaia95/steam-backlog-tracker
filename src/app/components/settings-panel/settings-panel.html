@@ -5,16 +5,17 @@
         
         <label for="inputApiKey">
             Steam API Key 
-            <input name="inputApiKey" [(ngModel)]="this.appSettings.apiKey"/>
+            <input name="inputApiKey" [(ngModel)]="this.apiKey"/>
         </label>
         <label for="inputAccountId">
             User Account ID
-            <input name="inputAccountId" [(ngModel)]="this.appSettings.accountId"/>
+            <input name="inputAccountId" [(ngModel)]="this.accountId"/>
         </label>
 
         <div class="button-container">
+            <button (click)="onClosePressed()">Close</button>
             <button (click)="onClearPressed()">Clear Settings</button>
-            <button (click)="onClosePressed()">Apply</button>
+            <button (click)="onApplyPressed()">Apply</button>
         </div>
     </div>
 </div>

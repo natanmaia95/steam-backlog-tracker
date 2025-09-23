@@ -7,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrl: './footer.css'
 })
 export class Footer {
-
+  onLinkClicked() {
+    console.log("link clicked");
+    window.open('https://natanmaia95.github.io/', "_blank");
+  }
 }
