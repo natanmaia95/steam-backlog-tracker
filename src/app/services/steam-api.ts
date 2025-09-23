@@ -1,15 +1,17 @@
 
-import { Injectable, signal } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { inject, Injectable, signal } from '@angular/core';
 import { SteamUserGame } from '../model/steam-user-game.interface';
+import { AppSettings } from './app-settings';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SteamApi {
   
-  #API_KEY = environment.API_KEY;
-  #ACCOUNT_ID = environment.STEAM_ACCOUNT_ID;
+  appSettings = inject(AppSettings);
+
+  #API_KEY = '';//environment.API_KEY;
+  #ACCOUNT_ID = '';//environment.STEAM_ACCOUNT_ID;
 
   #URL_STEAM = '/steamapi'; //"http://api.steampowered.com";
   #URL_STORE = "http://store.steampowered.com";
@@ -17,11 +19,14 @@ export class SteamApi {
   ogSteamGames = signal<Array<SteamUserGame>>([])
   //steamGames = signal([])
 
-  parsedSteamGames = signal<Array<SteamUserGame>>([]);
+  //parsedSteamGames = signal<Array<SteamUserGame>>([]);
 
   async loadGamesFromSteam() {
+    if (this.#API_KEY == '') this.#API_KEY = this.appSettings.apiKey();
+    if (this.#ACCOUNT_ID == '') this.#ACCOUNT_ID = this.appSettings.accountId();
+
     if (!this.#ACCOUNT_ID || !this.#API_KEY) {
-      alert("Please enter a Steam ID and ensure API key is set.");
+      alert("Please enter a Steam ID and ensure API key is set.\nYou can set those up in the settings on the top right.");
       return false;
     }
 

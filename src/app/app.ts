@@ -14,8 +14,4 @@ export class App {
   protected readonly title = signal('steam-play-tracker');
 
   steamApi = inject(SteamApi);
-
-  // ngOnInit() {
-  //   this.steamApi.loadGamesFromSteam();
-  // }
 }

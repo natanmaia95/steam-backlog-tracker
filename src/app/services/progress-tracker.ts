@@ -53,8 +53,10 @@ export class ProgressTracker {
   }
 
   clearProgress(): void {
-    this.gamesProgress.set(new Map());
-    this.saveProgress();
+    if (confirm("Are you sure you want to set all your games as unplayed?")) {
+      this.gamesProgress.set(new Map());
+      this.saveProgress();
+    }
   }
 
 }

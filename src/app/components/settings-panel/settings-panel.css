@@ -1,0 +1,49 @@
+.modal-backdrop {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+
+    z-index: 20;
+}
+
+
+.settings-panel {
+    position: fixed;
+    width: 400px;
+    height: fit-content;
+
+    background-color: #151515;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 32px;
+
+    border-radius: 32px;
+
+    /* margin: auto; */
+    z-index: 20;
+}
+
+label {
+    width: calc(100% - 64px);
+    display: flex;
+    justify-content: space-between;
+
+    padding-bottom: 16px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

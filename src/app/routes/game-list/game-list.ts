@@ -8,18 +8,21 @@ import { ProgressTracker } from '../../services/progress-tracker';
 import { FilterGamesByPlayedPipe } from "../../pipes/filter-games-by-played-pipe";
 import { NgClass } from '@angular/common';
 import { RandomGamesPanel } from '../../components/random-games-panel/random-games-panel';
+import { SettingsPanel } from "../../components/settings-panel/settings-panel";
+import { AppSettings } from '../../services/app-settings';
 
 
 @Component({
   selector: 'app-game-list',
-  imports: [GameListItem, FormsModule, FilterGamesByNamePipe, FilterGamesByPlayedPipe, NgClass, RandomGamesPanel],
+  imports: [GameListItem, FormsModule, FilterGamesByNamePipe, FilterGamesByPlayedPipe, NgClass, RandomGamesPanel, SettingsPanel],
   templateUrl: './game-list.html',
   styleUrl: './game-list.css'
 })
 export class GameList {
 
   progressTracker = inject(ProgressTracker);
-  steamApi = inject(SteamApi)
+  steamApi = inject(SteamApi);
+  appSettings = inject(AppSettings);
   games = signal<Array<SteamUserGame>>([]);
 
   loaded = signal(false);
@@ -28,22 +31,34 @@ export class GameList {
   randomGamesVisible = signal(false);
   randomGames = signal<Array<SteamUserGame>>([]);
 
+  settingsVisible = signal(false);
+
   searchTerm = signal('');
   filterNotPlayed = signal(false);
 
   nameFilter = signal('Only Not Played');
 
   ngOnInit() {
+    this.appSettings.loadSettings();
     this.loadGames();
   }
 
   async loadGames() {
-    var loadSuccessful = await this.steamApi.loadGamesFromSteam();
+    this.loaded.set(false);
+    this.failed.set(false);
+    try {
+      var loadSuccessful = await this.steamApi.loadGamesFromSteam();
 
-    if (!loadSuccessful) {
+      if (!loadSuccessful) {
+        this.failed.set(true);
+        return;
+      }
+    } catch(error) {
+      console.log(error);
       this.failed.set(true);
       return;
     }
+
       
     await new Promise(resolve => setTimeout(resolve, 1000));
     this.loaded.set(true);
@@ -69,5 +84,15 @@ export class GameList {
 
   hideRandomGames() {
     this.randomGamesVisible.set(false);
+  }
+
+  showSettings() {
+    this.settingsVisible.set(true);
+  }
+
+  hideSettings() {
+    this.settingsVisible.set(false);
+    this.loadGames();
+    console.log('reloading');
   }
 }
