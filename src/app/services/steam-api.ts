@@ -27,9 +27,9 @@ export class SteamApi {
   getRequestUrl(mode:string, input:any) {
     let baseUrl = 'https://steamtracker.natanmaia95apps.com.br/';
     let url = '';
-    if (mode == 'owned-games') {
+    if (mode == 'ownedgames') {
       // url = `/steamapi/IPlayerService/GetOwnedGames/v1/?key=${input.apiKey}&steamid=${input.accountId}&include_appinfo=true&include_played_free_games=true&format=json`
-      url = baseUrl += `steam-proxy/owned-games/?apiKey=${input.apiKey}&accountId=${input.accountId}`; 
+      url = baseUrl + "steam-proxy/ownedgames/" + `?apiKey=${input.apiKey}&accountId=${input.accountId}`; 
     }
 
     return url;
@@ -50,7 +50,7 @@ export class SteamApi {
     // url += `?key=${this.#API_KEY}&steamid=${this.#ACCOUNT_ID}`;
     // url += "&include_appinfo=true&include_played_free_games=true&format=json";
 
-    let url = this.getRequestUrl('owned-games', {apiKey: this.#API_KEY, accountId: this.#ACCOUNT_ID});
+    let url = this.getRequestUrl('ownedgames', {apiKey: this.#API_KEY, accountId: this.#ACCOUNT_ID});
     console.log('request URL: ', url);
 
     try {
