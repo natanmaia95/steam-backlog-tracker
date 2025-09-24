@@ -10,11 +10,12 @@ import { NgClass } from '@angular/common';
 import { RandomGamesPanel } from '../../components/random-games-panel/random-games-panel';
 import { SettingsPanel } from "../../components/settings-panel/settings-panel";
 import { AppSettings } from '../../services/app-settings';
+import { Header } from "../../components/header/header";
 
 
 @Component({
   selector: 'app-game-list',
-  imports: [GameListItem, FormsModule, FilterGamesByNamePipe, FilterGamesByPlayedPipe, NgClass, RandomGamesPanel, SettingsPanel],
+  imports: [GameListItem, FormsModule, FilterGamesByNamePipe, FilterGamesByPlayedPipe, NgClass, RandomGamesPanel, SettingsPanel, Header],
   templateUrl: './game-list.html',
   styleUrl: './game-list.css'
 })
@@ -27,6 +28,7 @@ export class GameList {
 
   loaded = signal(false);
   failed = signal(false);
+  errorMessage = signal('');
 
   randomGamesVisible = signal(false);
   randomGames = signal<Array<SteamUserGame>>([]);
@@ -53,12 +55,14 @@ export class GameList {
         this.failed.set(true);
         return;
       }
-    } catch(error) {
+    } catch (error: unknown) {
       console.log(error);
+      this.errorMessage.set(error instanceof Error ? error.message : String(error));
       this.failed.set(true);
       return;
     }
-
+    
+    this.errorMessage.set('');
       
     await new Promise(resolve => setTimeout(resolve, 1000));
     this.loaded.set(true);

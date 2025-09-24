@@ -3,32 +3,21 @@
     (closePressed)="hideSettings($event)"
 />
 
-@if(failed()) {
-<header>
-    <div class="title-container">
-        <h1>Steam Backlog Tracker</h1>
+<app-header (settingsClicked)="showSettings()"></app-header>
 
-        <button (click)="showSettings()">
-            <img class="img-icon-settings" src="settings-2-svgrepo-com.svg">
-        </button>
-    </div>
-</header>
+@if(failed()) {
 <div style="height: 200px"></div>
-<h2>Error</h2>
+<div class="centered-div error-container">
+    <h2>Error</h2>
+    <p>{{errorMessage()}}</p>
+</div>
 }
 
 @else if(!loaded()) {
-<header>
-    <div class="title-container">
-        <h1>Steam Backlog Tracker</h1>
-
-        <button (click)="showSettings()" >
-            <img class="img-icon-settings" src="settings-2-svgrepo-com.svg">
-        </button>
-    </div>
-</header>
 <div style="height: 200px"></div>
-<h2>Loading...</h2>
+<div class="centered-div">
+    <h2>Loading...</h2>
+</div>
 }
 
 @else {
@@ -39,31 +28,34 @@
     (closePressed)="hideRandomGames()"
 />
 
-<header>
-    <div class="title-container">
-        <h1>Steam Backlog Tracker</h1>
-
-        <button (click)="showSettings()" >
-            <img class="img-icon-settings" src="settings-2-svgrepo-com.svg">
-        </button>
-    </div>
-    <div class="search-container">
-        <input class="search-bar" [(ngModel)]="searchTerm" placeholder="Search games...">
-        <!-- <input type="button" [(ngModel)]="filterNotPlayed" [value]="'nameFilter()'"> -->
-        <button class="btn-search-option" [ngClass]="{'toggled': filterNotPlayed()}" (click)="filterNotPlayed.set(!filterNotPlayed())">🔻Unplayed</button>
-        <button class="btn-search-option" (click)="showRandomGames()">🎲Random 3</button>
-        <button class="btn-search-option" (click)="progressTracker.clearProgress()">🗑️Clear Data</button>
-        
-        <!-- <form>
-            <input name="searchTerm" [(ngModel)]="searchTerm" placeholder="Search games...">
-            <br>
-            <label for="filterNotPlayed">Only not played: </label>
-            <input type="button" name="filterNotPlayed" [(ngModel)]="filterNotPlayed" value="nameFilter()">
-        </form>
-        <button (click)="progressTracker.clearProgress()">Clear Data</button> -->
-    </div>
-</header>
-
+<div class="search-container">
+    <input class="search-bar" [(ngModel)]="searchTerm" placeholder="Search games...">
+    <!-- <input type="button" [(ngModel)]="filterNotPlayed" [value]="'nameFilter()'"> -->
+    
+    <button 
+        class="btn-search-option" [ngClass]="{'toggled': filterNotPlayed()}" 
+        (click)="filterNotPlayed.set(!filterNotPlayed())"
+        title="Filter to show only games you haven't played yet."
+    >📌Unplayed</button>
+    
+    <button 
+        class="btn-search-option" (click)="showRandomGames()"
+        title="Roll 3 random games from the list of games you haven't played yet."
+    >🎲Random 3</button>
+    
+    <button 
+        class="btn-search-option" (click)="progressTracker.clearProgress()"
+        title="Reset all the 'played' checkboxes you've set, and clear them from local storage."
+    >🗑️Clear Data</button>
+    
+    <!-- <form>
+        <input name="searchTerm" [(ngModel)]="searchTerm" placeholder="Search games...">
+        <br>
+        <label for="filterNotPlayed">Only not played: </label>
+        <input type="button" name="filterNotPlayed" [(ngModel)]="filterNotPlayed" value="nameFilter()">
+    </form>
+    <button (click)="progressTracker.clearProgress()">Clear Data</button> -->
+</div>
 
 <div style="height: 200px"></div>
 
@@ -76,5 +68,7 @@
         />
     }
 </div>
+
+<div style="height: 64px"></div>
 
 }

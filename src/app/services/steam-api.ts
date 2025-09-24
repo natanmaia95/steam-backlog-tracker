@@ -27,6 +27,7 @@ export class SteamApi {
 
     if (!this.#ACCOUNT_ID || !this.#API_KEY) {
       alert("Please enter a Steam ID and ensure API key is set.\nYou can set those up in the settings on the top right.");
+      throw new Error("No valid Account ID or Steam API Key.")
       return false;
     }
 

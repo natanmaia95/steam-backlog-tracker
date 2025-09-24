@@ -49,4 +49,12 @@ export class SettingsPanel {
     this.appSettings.apiKey.set(this.apiKey());
     this.appSettings.accountId.set(this.accountId());
   }
+
+  onApiHelpClicked() {
+    window.open('https://steamcommunity.com/dev/apikey', '_blank');
+  }
+  
+  onAccountHelpClicked() {
+    window.open('https://store.steampowered.com/account/', '_blank');
+  }
 }
