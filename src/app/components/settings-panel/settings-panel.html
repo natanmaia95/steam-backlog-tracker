@@ -4,10 +4,15 @@
         <h2>Settings</h2>
         
         <label for="inputAccountId"
-            title="The account to get games from. This is a 17-digit number found in Steam > [username] > Account Details at store.steampowered.com/account."
+            
         >
             User Account ID
-            <button class="btn-help" (click)="onAccountHelpClicked()" title="The account to get games from. This is a 17-digit number found in Steam > [username] > Account Details at https://store.steampowered.com/account.">?</button>
+            <button 
+                class="btn-help" (click)="onAccountHelpClicked()" 
+            
+                matTooltip="The account to get games from. This is a 17-digit number found in Steam > [username] > Account Details at https://store.steampowered.com/account. Click to follow the link."
+                matTooltipPosition="above"
+            >?</button>
             <input name="inputAccountId" [(ngModel)]="this.accountId"/>
         </label>
 
