@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:pages": "ng build --output-path docs --base-href /steam-backlog-tracker/",
+    "build:pages": "ng build --base-href /browser/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
