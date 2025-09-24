@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:pages": "ng build --base-href /browser/",
+    "build:pages": "ng build --output-path docs --no-prerender --base-href /steam-backlog-tracker/ && robocopy docs\\browser docs /E && rmdir /S /Q docs\\browser",
+    "build:pages-gha": "ng build --output-path docs --no-prerender --base-href /steam-backlog-tracker/ && cp -r docs/browser/* docs/ && rm -rf docs/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

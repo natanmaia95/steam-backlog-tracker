@@ -21,7 +21,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular app for GitHub Pages
-        run: npm run build:pages
+        run: npm run build:pages-gha
 
       - name: Upload static site artifact
         uses: actions/upload-artifact@v4
