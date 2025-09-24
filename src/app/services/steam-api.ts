@@ -29,7 +29,7 @@ export class SteamApi {
     let url = '';
     if (mode == 'owned-games') {
       // url = `/steamapi/IPlayerService/GetOwnedGames/v1/?key=${input.apiKey}&steamid=${input.accountId}&include_appinfo=true&include_played_free_games=true&format=json`
-      url = baseUrl += `/steam-proxy/owned-games/?apiKey=${input.apiKey}&accountId=${input.accountId}`; 
+      url = baseUrl += `steam-proxy/owned-games/?apiKey=${input.apiKey}&accountId=${input.accountId}`; 
     }
 
     return url;
