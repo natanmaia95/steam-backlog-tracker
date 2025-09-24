@@ -3,13 +3,6 @@
     <div class="settings-panel">
         <h2>Settings</h2>
         
-        <label for="inputApiKey"
-            title="You'll need a Steam Community developer API key. You can find one at steamcommunity.com/dev/apikey or clicking the '?' button."
-        >
-            Steam API Key 
-            <button class="btn-help" (click)="onApiHelpClicked()" title="You'll need a Steam Community developer API key. You can find one at https://steamcommunity.com/dev/apikey.">?</button>
-            <input name="inputApiKey" [(ngModel)]="this.apiKey"/>
-        </label>
         <label for="inputAccountId"
             title="The account to get games from. This is a 17-digit number found in Steam > [username] > Account Details at store.steampowered.com/account."
         >

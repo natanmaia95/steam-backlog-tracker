@@ -12,14 +12,12 @@ export class SettingsPanel {
 
   appSettings = inject(AppSettings);
 
-  apiKey = signal('');
   accountId = signal('');
 
   visible = input(false);
   closePressed = output<boolean>();
 
   ngOnInit() {
-    //this.apiKey.set()
     this.recoverSettings();
   }
 
@@ -41,19 +39,13 @@ export class SettingsPanel {
   }
 
   recoverSettings() {
-    this.apiKey.set(this.appSettings.apiKey());
     this.accountId.set(this.appSettings.accountId());
   }
 
   applySettings() {
-    this.appSettings.apiKey.set(this.apiKey());
     this.appSettings.accountId.set(this.accountId());
   }
 
-  onApiHelpClicked() {
-    window.open('https://steamcommunity.com/dev/apikey', '_blank');
-  }
-  
   onAccountHelpClicked() {
     window.open('https://store.steampowered.com/account/', '_blank');
   }

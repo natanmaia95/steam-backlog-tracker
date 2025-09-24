@@ -10,38 +10,42 @@ export class SteamApi {
   
   appSettings = inject(AppSettings);
 
-  #API_KEY = '';//environment.API_KEY;
   #ACCOUNT_ID = '';//environment.STEAM_ACCOUNT_ID;
 
-  #URL_STEAM = "http://api.steampowered.com"; // '/steamapi';
-  #URL_STORE = "http://store.steampowered.com";
-
   ogSteamGames = signal<Array<SteamUserGame>>([])
-  //steamGames = signal([])
 
   //parsedSteamGames = signal<Array<SteamUserGame>>([]);
 
   
 
-   // CHANGE THIS FUNCTION TO MAKE IT PORTABLE ON ANOTHER BACKEND
+  // CHANGE THIS FUNCTION TO MAKE IT PORTABLE ON ANOTHER BACKEND
   getRequestUrl(mode:string, input:any) {
     let baseUrl = 'https://steamtracker.natanmaia95apps.com.br/';
     let url = '';
     if (mode == 'ownedgames') {
       // url = `/steamapi/IPlayerService/GetOwnedGames/v1/?key=${input.apiKey}&steamid=${input.accountId}&include_appinfo=true&include_played_free_games=true&format=json`
-      url = baseUrl + "steam-proxy/ownedgames/" + `?apiKey=${input.apiKey}&accountId=${input.accountId}`; 
+      url = baseUrl + "steam-proxy/ownedgames/" + `?accountId=${input.accountId}`; 
     }
 
     return url;
   };
 
+  validateAccountId(id:string): boolean {
+    //must be a number
+    if (!isNaN(Number(id))) return false;
+
+    //must have 17 digits
+    if (id.length != 17) return false;
+
+    return true;
+  }
+
   async loadGamesFromSteam() {
-    this.#API_KEY = this.appSettings.apiKey();
     this.#ACCOUNT_ID = this.appSettings.accountId();
 
-    if (!this.#ACCOUNT_ID || !this.#API_KEY) {
-      alert("Please enter a Steam ID and ensure API key is set.\nYou can set those up in the settings on the top right.");
-      throw new Error("No valid Account ID or Steam API Key.")
+    if (!this.#ACCOUNT_ID || !this.validateAccountId(this.#ACCOUNT_ID)) {
+      alert("Please enter a valid Steam ID on the settings on the top right. It's a 17 digit number below your Steam nickname.");
+      throw new Error("No valid Account ID.")
       return false;
     }
 
@@ -50,7 +54,7 @@ export class SteamApi {
     // url += `?key=${this.#API_KEY}&steamid=${this.#ACCOUNT_ID}`;
     // url += "&include_appinfo=true&include_played_free_games=true&format=json";
 
-    let url = this.getRequestUrl('ownedgames', {apiKey: this.#API_KEY, accountId: this.#ACCOUNT_ID});
+    let url = this.getRequestUrl('ownedgames', {accountId: this.#ACCOUNT_ID});
     console.log('request URL: ', url);
 
     try {
