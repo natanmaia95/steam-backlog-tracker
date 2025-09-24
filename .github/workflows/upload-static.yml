@@ -30,8 +30,9 @@ jobs:
           echo "Contents of docs/browser/ (if exists):"
           ls -l docs/browser || echo "No browser folder"
 
-      - name: Upload static site artifact
-        uses: actions/upload-artifact@v4
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          name: static-site
-          path: './docs' # Uploads content from browser subfolder as root
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          publish_branch: gh-pages
