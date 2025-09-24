@@ -42,15 +42,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: github-pages-artifact
-          # Specify a path to download the contents directly here
-          path: './' # Downloads the contents directly to the current directory
+          # path: './'
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Now this path is correct, as the `docs` folder is at the top level
-          path: './docs'
+          path: './github-pages-artifact/docs'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
