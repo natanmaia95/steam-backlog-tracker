@@ -55,40 +55,33 @@ export class SteamApi {
 
     try {
       const response = await fetch(url);
+      const textData = await response.text(); // Read the body once as text.
 
-      // 2. Check for HTTP status code errors (e.g., 401, 403, 404, 500)
+      console.log("response text: ", textData);
+
+      // Check for HTTP status code errors (e.g., 401, 403, 404, 500)
       if (!response.ok) {
-        let errorData: any;
-        try {
-          // Attempt to parse response body as JSON, it might contain error details
-          errorData = await response.json();
-        } catch (jsonError) {
-          // If parsing fails, the response body might not be JSON (e.g., plain text error)
-          errorData = await response.text();
-        }
-
         const errorMessage = `API_FETCH_ERROR: HTTP Status ${response.status} - ${response.statusText}.`;
-        console.error('API Error Response:', errorData);
-        // Throw a more descriptive error that the caller can catch
-        throw new Error(`${errorMessage} Details: ${JSON.stringify(errorData)}`);
+        console.error('API Error Response:', textData);
+        // We can't guarantee a JSON body, so just use the text data
+        throw new Error(`${errorMessage} Details: ${textData}`);
       }
 
-      // 3. Handle successful response, but check if it's parseable JSON
-      let data: any;
+      // Handle successful response
+      let data;
       try {
-        data = await response.json();
+        data = JSON.parse(textData); // Manually parse the text as JSON
       } catch (jsonParseError) {
-        // This handles cases where response.ok is true, but the body is not valid JSON
         console.error('JSON Parse Error:', jsonParseError);
         throw new Error(`JSON_PARSE_ERROR: Failed to parse API response as JSON.`);
       }
 
       // 4. Validate the structure of the successful JSON response
       // The API returns an object with a 'response' property, which then has 'games'
-      if (!data || !data.response || !Array.isArray(data.response.games)) {
-        console.error('Unexpected API response structure:', data);
-        throw new Error(`API_RESPONSE_STRUCTURE_ERROR: Unexpected data structure from Steam API.`);
-      }
+      // if (!data || !data.response || !Array.isArray(data.response.games)) {
+      //   console.error('Unexpected API response structure:', data);
+      //   throw new Error(`API_RESPONSE_STRUCTURE_ERROR: Unexpected data structure from Steam API.`);
+      // }
 
       // 5. Process and set the games data
       this.ogSteamGames.set(data.response.games.map((game: any) => { // Use 'any' here as the raw API response might have more fields than SteamUserGame
@@ -110,7 +103,11 @@ export class SteamApi {
       // Re-throw the error so the calling function can catch it and react appropriately
       // Ensure the error message is user-friendly or logged for debugging
       let userFriendlyMessage = 'An unexpected error occurred while loading Steam games.';
-      if (error.message.startsWith('API_CONFIG_ERROR')) {
+
+      if (error instanceof TypeError && error.message.includes('NetworkError')) {
+        userFriendlyMessage = 'A network error occurred. This is often caused by a CORS policy issue. Please ensure the application is running from the correct domain or check your server configuration.';
+        console.error('CORS Error Details:', error);
+      } else if (error.message.startsWith('API_CONFIG_ERROR')) {
         userFriendlyMessage = error.message.replace('API_CONFIG_ERROR: ', '');
       } else if (error.message.startsWith('API_FETCH_ERROR')) {
         userFriendlyMessage = 'Failed to fetch data from Steam API. Please check your network or API key.';
