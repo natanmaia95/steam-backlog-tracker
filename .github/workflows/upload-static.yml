@@ -1,4 +1,4 @@
-name: Build Angular App for GitHub Pages
+name: Build and Upload Angular Static Site
 
 on:
   push:
@@ -22,3 +22,9 @@ jobs:
 
       - name: Build Angular app for GitHub Pages
         run: npm run build:pages
+
+      - name: Upload static site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-site
+          path: './docs/browser' # Uploads content from browser subfolder as root
