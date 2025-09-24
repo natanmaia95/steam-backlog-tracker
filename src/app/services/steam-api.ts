@@ -21,9 +21,11 @@ export class SteamApi {
 
   //parsedSteamGames = signal<Array<SteamUserGame>>([]);
 
+  
+
    // CHANGE THIS FUNCTION TO MAKE IT PORTABLE ON ANOTHER BACKEND
   getRequestUrl(mode:string, input:any) {
-    let baseUrl = 'steamtracker.natanmaia95apps.com.br/';
+    let baseUrl = 'https://steamtracker.natanmaia95apps.com.br/';
     let url = '';
     if (mode == 'owned-games') {
       // url = `/steamapi/IPlayerService/GetOwnedGames/v1/?key=${input.apiKey}&steamid=${input.accountId}&include_appinfo=true&include_played_free_games=true&format=json`
@@ -49,6 +51,7 @@ export class SteamApi {
     // url += "&include_appinfo=true&include_played_free_games=true&format=json";
 
     let url = this.getRequestUrl('owned-games', {apiKey: this.#API_KEY, accountId: this.#ACCOUNT_ID});
+    console.log('request URL: ', url);
 
     try {
       const response = await fetch(url);
