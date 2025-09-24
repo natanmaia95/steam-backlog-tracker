@@ -42,20 +42,21 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: github-pages-artifact
-          # Specify a path to download the contents directly here
-          path: './' # The download action creates a subdirectory named after the artifact here
-      # NEW STEP to move the files to the correct location
-      - name: Move downloaded files
-        run: |
-          ls -l github-pages-artifact/
-          mv github-pages-artifact/docs .
+          # Download into a known, dedicated directory
+          path: './downloaded-artifact'
+      
+      - name: Debug - List downloaded files
+        run: ls -lR ./downloaded-artifact && ls -lR .
+      
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # This path is now correct, as the 'docs' folder is at the top level
-          path: './docs'
+          # Point the action directly to the docs folder inside the downloaded directory
+          path: './downloaded-artifact/docs'
+          
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
