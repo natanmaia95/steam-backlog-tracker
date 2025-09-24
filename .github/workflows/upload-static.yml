@@ -47,8 +47,8 @@ jobs:
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # `download-artifact` puts the artifact in the current directory, so this works.
-          path: './docs'
+          # Change this path to point to the correct directory after downloading
+          path: 'github-pages-artifact/docs'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
