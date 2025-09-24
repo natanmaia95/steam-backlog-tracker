@@ -23,8 +23,15 @@ jobs:
       - name: Build Angular app for GitHub Pages
         run: npm run build:pages-gha
 
+      - name: List docs folder contents
+        run: |
+          echo "Contents of docs/ after build:"
+          ls -l docs
+          echo "Contents of docs/browser/ (if exists):"
+          ls -l docs/browser || echo "No browser folder"
+
       - name: Upload static site artifact
         uses: actions/upload-artifact@v4
         with:
           name: static-site
-          path: './docs/browser' # Uploads content from browser subfolder as root
+          path: './docs' # Uploads content from browser subfolder as root
