@@ -32,10 +32,16 @@ export class SteamApi {
 
   validateAccountId(id:string): boolean {
     //must be a number
-    if (!isNaN(Number(id))) return false;
-
+    if (Number.isNaN(Number(id))) {
+      //console.log(id, " is not a number");
+      return false;
+    }
+    
     //must have 17 digits
-    if (id.length != 17) return false;
+    if (id.length != 17) {
+      //console.log("length: ", id.length);
+      return false;
+    }
 
     return true;
   }

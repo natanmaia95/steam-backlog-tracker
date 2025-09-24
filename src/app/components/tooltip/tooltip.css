@@ -1,0 +1,53 @@
+/*
+ * The component itself will be positioned relative to its parent element.
+ */
+:host {
+  display: block;
+}
+
+/* Base styles for the tooltip content */
+.tooltip-content {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 0.5rem;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  color: #fff;
+  background-color: #1f2937;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* white-space: normal; */
+  /* Added overflow-wrap to handle long strings like URLs */
+  /* overflow-wrap: break-word; */
+  
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 300ms ease-in-out, visibility 300ms ease-in-out;
+  pointer-events: none;
+  z-index: 10;
+
+}
+
+/* Creates the tooltip arrow */
+.tooltip-content::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top-color: #1f2937;
+}
+
+/*
+ * Use :host-context to select the parent button's hover state.
+ * The tooltip becomes visible and opaque when the parent button is hovered.
+ */
+:host-context(.tooltip-parent:hover) .tooltip-content {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}

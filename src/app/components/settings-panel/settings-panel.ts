@@ -1,11 +1,11 @@
 import { Component, inject, input, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppSettings } from '../../services/app-settings';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { Tooltip } from "../tooltip/tooltip";
 
 @Component({
   selector: 'app-settings-panel',
-  imports: [FormsModule, MatTooltipModule],
+  imports: [FormsModule, Tooltip],
   templateUrl: './settings-panel.html',
   styleUrl: './settings-panel.css'
 })
