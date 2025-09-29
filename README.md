@@ -10,6 +10,11 @@ This tool shows all games in your Steam library and helps you sort which games y
 - Open 'Settings' by clicking the gear button on the top right, insert your Steam Account ID (a 17 digit number below your nickname in [store.steampowered.com/account](https://store.steampowered.com/account)), and click Apply
 - If you see the games you own in your account, now you can click on them to mark as played/unplayed.
 
+## Technologies
+
+The front-end uses Angular (version 20), on top of HTML/CSS/Typescript. It communicates with the Steam Web API.
+It's a static website which means the hosted version needs a back-end to route the requests around CORS; mine is made with Node.js and Express.
+
 ## Running Locally (WIP)
 
 To open the front-end server on `http://localhost:4200/` run:
